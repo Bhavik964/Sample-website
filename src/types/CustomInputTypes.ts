@@ -56,3 +56,12 @@ export interface CountryDropdownProps {
     onChange: (value: string) => void;
     countries: Country[];
 }
+
+export interface SearchInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  onClick?: () => void;
+  className?: string;
+  inputClassName?: string;
+}
