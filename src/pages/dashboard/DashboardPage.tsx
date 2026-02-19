@@ -1,165 +1,117 @@
-import { Grid, SimpleGrid, Paper, Text, Group, Box, rem } from '@mantine/core';
-import { IconTrendingUp, IconUsers, IconEye, IconRefresh, IconMapPin, IconUserCheck, IconUserX } from '@tabler/icons-react';
-import { AreaChart, DonutChart } from '@mantine/charts';
-import { StatsCard } from '../../components/ui/StatsCard';
-
-const salesData = [
-  { month: 'Jan', sales: 4000 },
-  { month: 'Feb', sales: 3000 },
-  { month: 'Mar', sales: 5000 },
-  { month: 'Apr', sales: 4500 },
-  { month: 'May', sales: 6000 },
-  { month: 'Jun', sales: 5500 },
-];
-
-const categoryData = [
-  { name: 'Electronics', value: 56.2, color: '#000000' },
-  { name: 'Fashion', value: 25.5, color: '#6c757d' },
-  { name: 'Home & Garden', value: 18.3, color: '#adb5bd' },
-];
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import SearchInput from '@/components/CustomInput/SearchInput';
+import { useState } from 'react';
 
 export const DashboardPage = () => {
+    const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
+  const courseData = [
+    {
+      _id: "1",
+      name: "Full Stack Development",
+      price: 25000,
+      discount: 10,
+      createdAt: new Date(),
+      subCourses: [1, 2, 3],
+    },
+    {
+      _id: "2",
+      name: "UI/UX Design Masterclass",
+      price: 18000,
+      discount: 0,
+      createdAt: new Date(),
+      subCourses: [],
+    },
+    {
+      _id: "3",
+      name: "Digital Marketing Pro",
+      price: 15000,
+      discount: 20,
+      createdAt: new Date(),
+      subCourses: [1],
+    },
+  ];
+
+  const truncateTitle = (title: string) =>
+    title.length > 30 ? title.slice(0, 30) + "..." : title;
+
+  const calculateTotalPrice = (course: any) => {
+    if (course.discount) {
+      return `₹${course.price - (course.price * course.discount) / 100}`;
+    }
+    return `₹${course.price}`;
+  };
+
   return (
-    <Box p="xl">
-      <Text size="xl" fw={700} mb="xs" c="#000000">
-        Dashboard Overview
-      </Text>
-      <Text size="sm" c="#6c757d" mb="xl">
-        Here's what's happening with your platform today.
-      </Text>
+    <div className="flex h-screen bg-gray-25 overflow-hidden">
+      <div className="flex flex-1 flex-col min-w-0 h-full">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 pt-4 px-4 gap-4">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Institute Dashboard
+          </h1>
 
-      {/* People Analytics */}
-      <Text size="lg" fw={600} mb="md" c="#000000">
-        People Analytics
-      </Text>
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg" mb="xl">
-        <StatsCard
-          title="Total People"
-          value="2,847"
-          diff={14.2}
-          icon={<IconUsers size={24} />}
-        />
-        <StatsCard
-          title="Active Users"
-          value="2,234"
-          diff={12.5}
-          icon={<IconUserCheck size={24} />}
-        />
-        <StatsCard
-          title="Inactive Users"
-          value="613"
-          diff={-3.2}
-          icon={<IconUserX size={24} />}
-        />
-        <StatsCard
-          title="Growth Rate"
-          value="18.4%"
-          diff={8.1}
-          icon={<IconTrendingUp size={24} />}
-          dark={true}
-        />
-      </SimpleGrid>
+          <button
+            className="w-full md:w-48 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition duration-200"
+            onClick={() => alert("Static Mode: Add Course Disabled")}
+          >
+            + Add Course
+          </button>
+        </div>
 
-      {/* Territory Analytics */}
-      <Text size="lg" fw={600} mb="md" c="#000000">
-        Territory Analytics
-      </Text>
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg" mb="xl">
-        <StatsCard
-          title="Total Territories"
-          value="156"
-          diff={5.8}
-          icon={<IconMapPin size={24} />}
-        />
-        <StatsCard
-          title="Active Territories"
-          value="142"
-          diff={3.2}
-          icon={<IconEye size={24} />}
-        />
-        <StatsCard
-          title="Coverage"
-          value="91.2%"
-          diff={2.1}
-          icon={<IconRefresh size={24} />}
-        />
-        <StatsCard
-          title="Efficiency"
-          value="87.5%"
-          diff={12.3}
-          icon={<IconTrendingUp size={24} />}
-          dark={true}
-        />
-      </SimpleGrid>
+        <div className="relative w-full mb-4 px-4">
+         <SearchInput value={search} onChange={setSearch} placeholder="Search course" />
+         </div>
 
-      {/* Charts Section */}
-      <Grid>
-        <Grid.Col span={{ base: 12, md: 8 }}>
-          <Paper p="xl" radius="12" style={{ border: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
-            <Group justify="space-between" mb="lg">
-              <Text fw={700} size="lg" c="#000000">
-                Performance Metrics
-              </Text>
-              <Group gap="xs">
-                <Text size="sm" c="#6c757d">Export data</Text>
-                <Text size="sm" c="#6c757d">Last 30 days</Text>
-              </Group>
-            </Group>
+        <div className="flex-1 overflow-y-auto px-4 pb-4">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {courseData.map((course) => (
+              <div
+                key={course._id}
+                role="button"
+                className="bg-white rounded-xl transition-all cursor-pointer h-full p-4 shadow-sm hover:shadow-md border border-gray-200"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="px-3 py-1 text-sm font-medium rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">
+                    Course
+                  </div>
+                  <div className="text-sm text-gray-500 font-medium">
+                    {moment(course.createdAt).format("DD/MM/YYYY")}
+                  </div>
+                </div>
 
-            <AreaChart
-              h={300}
-              data={salesData}
-              dataKey="month"
-              series={[
-                { name: 'sales', color: '#000000' },
-              ]}
-              curveType="natural"
-              gridAxis="xy"
-              withGradient
-              style={{
-                '--mantine-color-gray-6': '#000000',
-              }}
-            />
-          </Paper>
-        </Grid.Col>
+                <h3 className="font-semibold text-lg text-gray-800 break-words mb-2">
+                  {truncateTitle(course.name)}
+                </h3>
 
-        <Grid.Col span={{ base: 12, md: 4 }}>
-          <Paper p="xl" radius="12" style={{ border: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
-            <Text fw={700} size="lg" mb="lg" c="#000000">
-              Distribution
-            </Text>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {course.discount > 0 && (
+                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                      {course.discount}% Off
+                    </span>
+                  )}
 
-            <DonutChart
-              data={categoryData}
-              tooltipDataSource="segment"
-              mx="auto"
-              size={200}
-              thickness={30}
-            />
+                  <span className="px-2 py-1 text-xs font-medium rounded-full bg-pink-100 text-pink-700">
+                    {course.subCourses.length > 0
+                      ? `${course.subCourses.length} Sub-Courses`
+                      : "No Sub-Courses"}
+                  </span>
+                </div>
 
-            <Box mt="lg">
-              {categoryData.map((item) => (
-                <Group key={item.name} justify="space-between" mb="xs">
-                  <Group gap="xs">
-                    <Box
-                      style={{
-                        width: rem(12),
-                        height: rem(12),
-                        backgroundColor: item.color,
-                        borderRadius: rem(2),
-                      }}
-                    />
-                    <Text size="sm" c="#000000">{item.name}</Text>
-                  </Group>
-                  <Text size="sm" fw={600} c="#000000">
-                    {item.value}%
-                  </Text>
-                </Group>
-              ))}
-            </Box>
-          </Paper>
-        </Grid.Col>
-      </Grid>
-    </Box>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-gray-700">
+                    Total Price:
+                  </span>
+                  <span className="text-lg font-bold text-black">
+                    {calculateTotalPrice(course)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };

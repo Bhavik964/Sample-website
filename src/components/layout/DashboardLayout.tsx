@@ -29,9 +29,9 @@ import {
 import { useAuth } from '../../hooks/useAuth';
 
 const navigation = [
-  { name: 'Overview', href: '/dashboard', icon: IconDashboard },
-  { name: 'People', href: '/users', icon: IconUsers },
-  { name: 'Territory', href: '/territory', icon: IconMapPin },
+  { name: 'Institute', href: '/dashboard', icon: IconDashboard },
+  // { name: 'People', href: '/users', icon: IconUsers },
+  // { name: 'Insi', href: '/territory', icon: IconMapPin },
 ];
 
 export const DashboardLayout = () => {
@@ -116,12 +116,12 @@ export const DashboardLayout = () => {
               hiddenFrom="base"
               visibleFrom="xs"
             >
-              Welcome back, {user?.name || 'User'}
+              Welcome back,  User
             </Text>
           </Group>
 
           <Group gap="md">
-            <TextInput
+            {/* <TextInput
               placeholder="Search..."
               leftSection={<IconSearch size={16} color="#6c757d" />}
               radius="xl"
@@ -143,7 +143,7 @@ export const DashboardLayout = () => {
               style={{ backgroundColor: '#f9fafb', color: '#6c757d' }}
             >
               <IconBell size={18} />
-            </ActionIcon>
+            </ActionIcon> */}
 
             <Menu shadow="md" width={200}>
               <Menu.Target>
@@ -157,10 +157,10 @@ export const DashboardLayout = () => {
                     />
                     <Box visibleFrom="sm">
                       <Text size="sm" fw={500} c="#111827">
-                        {user?.name || 'User'}
+                        { 'User'}
                       </Text>
                       <Text size="xs" c="#6b7280">
-                        {user?.role || 'Admin'}
+                        { 'Admin'}
                       </Text>
                     </Box>
                   </Group>
