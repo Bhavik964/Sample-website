@@ -66,8 +66,21 @@ Simply open [Lovable](https://lovable.dev/projects/16339d76-181f-4436-ad5d-3b360
 
 ## Can I connect a custom domain to my Lovable project?
 
+
+<!-- login dummy credentials -->
+for login use mobile number - 9999999999
+after that otp verify  - 123456
+<!-- env file variables -->
+VITE_API_KEY= {{VITE_API_KEY}}
+VITE_API_URL={{VITE_API_URL}}
+VITE_APP_NAME = {{VITE_APP_NAME}}
+VITE_GOOGLE_MAPS_API_KEY= {{VITE_GOOGLE_MAPS_API_KEY}}
+
 Yes, you can!
 
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+
+
